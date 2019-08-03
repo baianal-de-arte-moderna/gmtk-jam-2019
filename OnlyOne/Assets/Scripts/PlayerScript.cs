@@ -5,17 +5,21 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    [Space(10)]
     [Header("Environment")]
     public float gravity;
 
-    [Space(10)]
     [Header("Movement")]
     public float topSpeed;
+    public float topJump;
     public int tractionFrames;
     public AnimationCurve traction;
     public int slowdownFrames;
     public AnimationCurve slowdown;
+
+    
+    [Header("Jump")]
+    public float jumpForce;
+    public AnimationCurve jumpCurve;
 
 
     new Rigidbody rigidbody;
@@ -23,23 +27,34 @@ public class PlayerScript : MonoBehaviour
     Vector3 move;
     Vector3 nextVelocity;
     int frameCount;
+    bool airborne;
+    bool jumpCommand;
+    bool goingUp;
+    float jumpingThreshold;
+    float jumpFrame;
     // Start is called before the first frame update
     void Awake()
     {
         controls = new Controls();
         rigidbody = GetComponent<Rigidbody>();
+        
         move = Vector3.zero;
+        airborne = false;
+        jumpingThreshold = gravity * Time.fixedDeltaTime + 0.01f;
 
         controls.Player.Walk.started += ctx => Move(ctx.ReadValue<float>());
         controls.Player.Walk.canceled += ctx => Move(0);
+
+        controls.Player.Jump.started += ctx => Jump(true);
+        controls.Player.Jump.canceled += ctx => Jump(false);
     }
 
-    void onEnable()
+    void OnEnable()
     {
         controls.Player.Enable();
     }
 
-    void onDisable()
+    void OnDisable()
     {
         controls.Player.Disable();
     }
@@ -48,8 +63,22 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        airborne = jumpCommand || Mathf.Abs(rigidbody.velocity.y) > jumpingThreshold;
         // Gravity
-        rigidbody.velocity += Vector3.down * gravity * Time.deltaTime;
+        if (goingUp)
+        {
+            nextVelocity = rigidbody.velocity;
+            nextVelocity.y += jumpForce * jumpCurve.Evaluate(jumpFrame);
+            rigidbody.velocity = nextVelocity;
+            
+            jumpFrame += Time.deltaTime;
+            goingUp = jumpFrame < jumpCurve[1].time;
+        }
+        else
+        {
+            rigidbody.velocity += Vector3.down * gravity * Time.deltaTime;
+        }
+        Debug.Log(goingUp);
     }
 
     void FixedUpdate()
@@ -80,6 +109,12 @@ public class PlayerScript : MonoBehaviour
             frameCount = 0;
         }
         move.x = multiplier;
-        Debug.Log(move.x);
     }    
+
+    void Jump(bool status)
+    {
+        jumpCommand = status;
+        goingUp = jumpCommand && !airborne;
+        if (goingUp) jumpFrame = 0;
+    }  
 }
