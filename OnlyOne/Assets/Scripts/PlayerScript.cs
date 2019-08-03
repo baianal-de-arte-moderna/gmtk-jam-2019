@@ -11,9 +11,9 @@ public class PlayerScript : MonoBehaviour
     [Header("Movement")]
     public float topSpeed;
     public float topJump;
-    public int tractionFrames;
+    public float tractionFrames;
     public AnimationCurve traction;
-    public int slowdownFrames;
+    public float slowdownFrames;
     public AnimationCurve slowdown;
 
     
@@ -26,7 +26,7 @@ public class PlayerScript : MonoBehaviour
     Controls controls;
     Vector3 move;
     Vector3 nextVelocity;
-    int frameCount;
+    float frameCount;
     bool airborne;
     bool jumpCommand;
     bool goingUp;
@@ -38,6 +38,7 @@ public class PlayerScript : MonoBehaviour
         controls = new Controls();
         rigidbody = GetComponent<Rigidbody>();
         
+        frameCount = 0;
         move = Vector3.zero;
         airborne = false;
         jumpingThreshold = gravity * Time.fixedDeltaTime + 0.01f;
@@ -76,9 +77,10 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            rigidbody.velocity += Vector3.down * gravity * Time.deltaTime;
+            nextVelocity = rigidbody.velocity;
+            nextVelocity.y -= gravity * Time.deltaTime;
+            rigidbody.velocity = nextVelocity;
         }
-        Debug.Log(goingUp);
     }
 
     void FixedUpdate()
@@ -93,9 +95,9 @@ public class PlayerScript : MonoBehaviour
         }
         else if (rigidbody.velocity.x != 0f)
         {
-            frameCount = Mathf.Min(frameCount + 1, tractionFrames);
+            frameCount = Mathf.Min(frameCount + 1, slowdownFrames);
             nextVelocity = rigidbody.velocity;
-            nextVelocity.x = topSpeed * traction.Evaluate(frameCount / slowdownFrames);
+            nextVelocity.x = topSpeed * slowdown.Evaluate(frameCount / slowdownFrames);
             rigidbody.velocity = nextVelocity;
         }
     }
@@ -106,7 +108,7 @@ public class PlayerScript : MonoBehaviour
             (move.x != 0 && multiplier == 0))
         {
             // Moving State changed
-            frameCount = 0;
+            frameCount = 0f;
         }
         move.x = multiplier;
     }    
