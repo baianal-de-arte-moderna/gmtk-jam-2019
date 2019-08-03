@@ -25,27 +25,30 @@ public class RollingFilmStrip : MonoBehaviour {
     [SerializeField]
     private FilmStripEvent OnExitFilmStripEvent;
 
+    private const float inScale = 2;
+    private const float outScale = 2;
+
     private bool isEntering;
     private bool isRewinding;
     private bool shouldExit;
     private bool isExiting;
 
     private void Update() {
-        if (isEntering && transform.localScale.x >= 1) {
+        if (isEntering && transform.localScale.x >= inScale) {
             transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
-            if (transform.localScale.x < 1) {
+            if (transform.localScale.x < inScale) {
                 isEntering = false;
                 isRewinding = true;
-                transform.localScale = 1 * Vector3.one;
+                transform.localScale = inScale * Vector3.one;
                 OnEnterFilmStripEvent?.Invoke();
             }
         }
 
-        if (isExiting && transform.localScale.x <= 2) {
+        if (isExiting && transform.localScale.x <= outScale) {
             transform.localScale += new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
-            if (transform.localScale.x > 2) {
+            if (transform.localScale.x > outScale) {
                 isExiting = false;
-                transform.localScale = 2 * Vector3.one;
+                transform.localScale = outScale * Vector3.one;
                 OnExitFilmStripEvent?.Invoke();
             }
         }
