@@ -33,7 +33,6 @@ public class AutoScrollingCamera : MonoBehaviour {
             rewindTime -= Time.deltaTime;
 
             if (rewindTime <= 0) {
-                isRewinding = false;
                 x = rewindTarget.x;
                 OnStopRewindEvent?.Invoke();
             }
@@ -56,6 +55,6 @@ public class AutoScrollingCamera : MonoBehaviour {
     }
 
     public void OnExitFilmStrip() {
-
+        isRewinding = false;
     }
 }

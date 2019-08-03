@@ -26,8 +26,9 @@ public class RollingFilmStrip : MonoBehaviour {
     private FilmStripEvent OnExitFilmStripEvent;
 
     private bool isEntering;
-    private bool isExiting;
     private bool isRewinding;
+    private bool shouldExit;
+    private bool isExiting;
 
     private void Update() {
         if (isEntering && transform.localScale.x >= 1) {
@@ -49,13 +50,18 @@ public class RollingFilmStrip : MonoBehaviour {
             }
         }
 
-        if (isRewinding) {
+        if (isRewinding || shouldExit) {
             for (int i = 0; i < filmFrames.Count; ++i) {
                 Image filmFrame = filmFrames[i];
                 float y = filmFrame.rectTransform.anchoredPosition.y;
                 if (y < 0) {
                     Image nextFilmFrame = filmFrames[(i + 1) % filmFrames.Count];
                     y += nextFilmFrame.rectTransform.anchoredPosition.y + nextFilmFrame.sprite.rect.height;
+
+                    if (shouldExit) {
+                        shouldExit = false;
+                        isExiting = true;
+                    }
                 }
                 y -= speed * Time.deltaTime;
                 filmFrame.rectTransform.anchoredPosition = new Vector2(filmFrame.rectTransform.anchoredPosition.x, y);
@@ -69,7 +75,7 @@ public class RollingFilmStrip : MonoBehaviour {
     }
 
     public void StopRewind() {
-        isExiting = true;
+        shouldExit = true;
         isRewinding = false;
     }
 }
