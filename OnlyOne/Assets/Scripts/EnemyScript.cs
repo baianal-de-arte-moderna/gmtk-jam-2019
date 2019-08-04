@@ -6,36 +6,44 @@ using UnityEngine.Events;
 public class PlayerHitEvent : UnityEvent {
 }
 
-public class EnemyScript : MonoBehaviour
-{
-    public Collider drawingInstanceCollider;
-    public Collider attackingCollider;
-    public Collider hurtboxCollider;
-    public GameObject enemyEntity;
+[Serializable]
+public class EnemyHitEvent : UnityEvent<GameObject> {
+}
+
+public class EnemyScript : MonoBehaviour {
 
     [SerializeField]
-    private PlayerHitEvent OnStartPlayerHitEvent;
+    private Collider drawingInstanceCollider;
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other == drawingInstanceCollider)
-        {
+    [SerializeField]
+    private Collider attackingCollider;
+
+    [SerializeField]
+    private Collider hurtboxCollider;
+
+    [SerializeField]
+    private PlayerHitEvent OnPlayerHitEvent;
+
+    [SerializeField]
+    private EnemyHitEvent OnEnemyHitEvent;
+
+    private void OnTriggerEnter(Collider other) {
+        if (other == drawingInstanceCollider) {
             //trigger  weapon drawing animation
         }
 
-        if (other == attackingCollider)
-        {
-            OnStartPlayerHitEvent?.Invoke();
+        if (other == attackingCollider) {
+            OnPlayerHitEvent?.Invoke();
         }
 
-        if (other == hurtboxCollider)
-        {
-            Destroy(enemyEntity);
+        if (other == hurtboxCollider) {
+            OnEnemyHitEvent?.Invoke(gameObject);
         }
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        //trigger sheathing animation
+    private void OnTriggerExit(Collider other) {
+        if (other == drawingInstanceCollider) {
+            //trigger sheathing animation
+        }
     }
 }
