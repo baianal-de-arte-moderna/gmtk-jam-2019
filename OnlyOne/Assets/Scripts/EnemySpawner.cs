@@ -44,4 +44,9 @@ public class EnemySpawner : MonoBehaviour {
     private bool IsSpawned() {
         return enemyInstance;
     }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, Vector3.one);
+    }
 }
