@@ -10,7 +10,6 @@ public class PlayerScript : MonoBehaviour
 
     [Header("Movement")]
     public float topSpeed;
-    public float topJump;
     public float tractionFrames;
     public AnimationCurve traction;
     public float slowdownFrames;
@@ -22,6 +21,7 @@ public class PlayerScript : MonoBehaviour
     public AnimationCurve jumpCurve;
 
     [Header("Shoot")]
+    public Transform limbs;
     public Texture2D aimSprite;
     public GameObject ArrowPrefab;
     public int maxShots;
@@ -30,13 +30,14 @@ public class PlayerScript : MonoBehaviour
     Controls controls;
     Vector3 move;
     Vector3 nextVelocity;
+    Vector2 mousePosition;
     float frameCount;
     bool airborne;
     bool jumpCommand;
     bool goingUp;
     float jumpingThreshold;
     float jumpFrame;
-    // Start is called before the first frame update
+
     void Awake()
     {
         controls = new Controls();
@@ -55,7 +56,9 @@ public class PlayerScript : MonoBehaviour
 
         controls.Player.Shoot.started += ctx => Shoot();
 
-        Cursor.SetCursor(aimSprite, Vector2.zero, CursorMode.Auto);
+        controls.Player.Aim.performed += ctx => SetMousePosition(ctx.ReadValue<Vector2>());
+
+        // Cursor.SetCursor(aimSprite, Vector2.zero, CursorMode.Auto);
     }
 
     void OnEnable()
@@ -67,7 +70,6 @@ public class PlayerScript : MonoBehaviour
     {
         controls.Player.Disable();
     }
-
 
     // Update is called once per frame
     void Update()
@@ -89,6 +91,9 @@ public class PlayerScript : MonoBehaviour
             nextVelocity.y -= gravity * Time.deltaTime;
             rigidbody.velocity = nextVelocity;
         }
+
+        // Aim
+        limbs.LookAt(mousePosition);
     }
 
     void FixedUpdate()
@@ -108,6 +113,11 @@ public class PlayerScript : MonoBehaviour
             nextVelocity.x = topSpeed * slowdown.Evaluate(frameCount / slowdownFrames) * Mathf.Sign(rigidbody.velocity.x);
             rigidbody.velocity = nextVelocity;
         }
+    }
+
+    void SetMousePosition(Vector2 pos)
+    {
+        mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(pos.x, pos.y, -Camera.main.transform.position.z));
     }
 
     void Move(float multiplier)
@@ -134,8 +144,6 @@ public class PlayerScript : MonoBehaviour
             ArrowPrefab, 
             transform.position, 
             Quaternion.identity);
-        arrow.transform.LookAt(
-            Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z))
-        );
+        arrow.transform.LookAt(mousePosition);
     }
 }

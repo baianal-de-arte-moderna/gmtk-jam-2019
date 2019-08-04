@@ -26,12 +26,6 @@ public class ArrowScript : MonoBehaviour
     /// </summary>
     void OnBecameInvisible()
     {
-        Destroy(this);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Destroy(gameObject);
     }
 }
