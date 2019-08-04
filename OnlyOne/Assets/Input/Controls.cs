@@ -32,6 +32,14 @@ public class Controls : IInputActionCollection
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""4701103f-323d-4391-88eb-e801a1f0b7c8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -78,6 +86,17 @@ public class Controls : IInputActionCollection
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3eae5012-f273-4092-af4c-709132e7f5a1"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -88,6 +107,7 @@ public class Controls : IInputActionCollection
         m_Player = asset.GetActionMap("Player");
         m_Player_Walk = m_Player.GetAction("Walk");
         m_Player_Jump = m_Player.GetAction("Jump");
+        m_Player_Shoot = m_Player.GetAction("Shoot");
     }
 
     ~Controls()
@@ -139,12 +159,14 @@ public class Controls : IInputActionCollection
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Walk;
     private readonly InputAction m_Player_Jump;
+    private readonly InputAction m_Player_Shoot;
     public struct PlayerActions
     {
         private Controls m_Wrapper;
         public PlayerActions(Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Walk => m_Wrapper.m_Player_Walk;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
+        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -160,6 +182,9 @@ public class Controls : IInputActionCollection
                 Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                Shoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                Shoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
+                Shoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShoot;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -170,6 +195,9 @@ public class Controls : IInputActionCollection
                 Jump.started += instance.OnJump;
                 Jump.performed += instance.OnJump;
                 Jump.canceled += instance.OnJump;
+                Shoot.started += instance.OnShoot;
+                Shoot.performed += instance.OnShoot;
+                Shoot.canceled += instance.OnShoot;
             }
         }
     }
@@ -178,5 +206,6 @@ public class Controls : IInputActionCollection
     {
         void OnWalk(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
     }
 }
