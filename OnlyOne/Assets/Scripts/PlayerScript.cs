@@ -8,6 +8,7 @@ public class PlayerScript : MonoBehaviour
 {
     [Header("Environment")]
     public float gravity;
+    public Transform SpritesRoot;
 
     [Header("Movement")]
     public float topSpeed;
@@ -33,6 +34,7 @@ public class PlayerScript : MonoBehaviour
     public UnityEvent onRetrieve;
 
     new Rigidbody rigidbody;
+    Animator animator;
     Controls controls;
     Vector3 move;
     Vector3 nextVelocity;
@@ -51,7 +53,7 @@ public class PlayerScript : MonoBehaviour
     {
         controls = new Controls();
         rigidbody = GetComponent<Rigidbody>();
-
+        animator = GetComponentInChildren<Animator>();
 
         ShotArrows = new List<GameObject>();
         frameCount = slowdownFrames;
@@ -106,6 +108,23 @@ public class PlayerScript : MonoBehaviour
 
         // Aim
         limbs.LookAt(mousePosition);
+        animator.SetFloat("Velocity", Mathf.Abs(rigidbody.velocity.x));
+        if (rigidbody.velocity.x < -0.1f && SpritesRoot.localScale.x > 0)
+        {
+            SpritesRoot.localScale = new Vector3(
+                - SpritesRoot.localScale.x,
+                SpritesRoot.localScale.y,
+                SpritesRoot.localScale.z
+            );
+        }
+        else if (rigidbody.velocity.x > 0.1f && SpritesRoot.localScale.x < 0)
+        {
+            SpritesRoot.localScale = new Vector3(
+                - SpritesRoot.localScale.x,
+                SpritesRoot.localScale.y,
+                SpritesRoot.localScale.z
+            );
+        }
     }
 
     void FixedUpdate()

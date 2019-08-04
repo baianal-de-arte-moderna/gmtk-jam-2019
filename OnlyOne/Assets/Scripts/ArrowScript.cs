@@ -40,7 +40,7 @@ public class ArrowScript : MonoBehaviour
             transform.position = Vector3.MoveTowards(
                 transform.position,
                 player.transform.position,
-                0.5f
+                0.7f
             );
         }
     }
