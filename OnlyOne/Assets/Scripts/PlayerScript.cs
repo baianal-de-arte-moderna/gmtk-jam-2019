@@ -58,7 +58,7 @@ public class PlayerScript : MonoBehaviour
 
         controls.Player.Aim.performed += ctx => SetMousePosition(ctx.ReadValue<Vector2>());
 
-        // Cursor.SetCursor(aimSprite, Vector2.zero, CursorMode.Auto);
+        Cursor.SetCursor(aimSprite, Vector2.zero, CursorMode.Auto);
     }
 
     void OnEnable()
