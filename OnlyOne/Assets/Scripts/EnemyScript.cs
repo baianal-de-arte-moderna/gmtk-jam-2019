@@ -7,43 +7,30 @@ public class PlayerHitEvent : UnityEvent {
 }
 
 [Serializable]
-public class EnemyHitEvent : UnityEvent<GameObject> {
+public class EnemyHitEvent : UnityEvent<EnemyScript> {
 }
 
 public class EnemyScript : MonoBehaviour {
 
     [SerializeField]
-    private Collider drawingInstanceCollider;
+    public PlayerHitEvent OnPlayerHitEvent;
 
     [SerializeField]
-    private Collider attackingCollider;
+    public EnemyHitEvent OnEnemyHitEvent;
 
-    [SerializeField]
-    private Collider hurtboxCollider;
-
-    [SerializeField]
-    private PlayerHitEvent OnPlayerHitEvent;
-
-    [SerializeField]
-    private EnemyHitEvent OnEnemyHitEvent;
-
-    private void OnTriggerEnter(Collider other) {
-        if (other == drawingInstanceCollider) {
-            //trigger  weapon drawing animation
-        }
-
-        if (other == attackingCollider) {
-            OnPlayerHitEvent?.Invoke();
-        }
-
-        if (other == hurtboxCollider) {
-            OnEnemyHitEvent?.Invoke(gameObject);
-        }
+    public void OnEnemyDrawingRangeEnter() {
+        //trigger  weapon drawing animation
     }
 
-    private void OnTriggerExit(Collider other) {
-        if (other == drawingInstanceCollider) {
-            //trigger sheathing animation
-        }
+    public void OnEnemyDrawingRangeExit() {
+        //trigger sheathing animation
+    }
+
+    public void OnEnemyAttackingRangeEnter() {
+        OnPlayerHitEvent?.Invoke();
+    }
+
+    public void OnEnemyHurtBoxHit() {
+        OnEnemyHitEvent?.Invoke(this);
     }
 }
