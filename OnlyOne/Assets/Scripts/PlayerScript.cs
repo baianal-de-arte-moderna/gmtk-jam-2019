@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -24,7 +25,9 @@ public class PlayerScript : MonoBehaviour
     public Transform limbs;
     public Texture2D aimSprite;
     public GameObject ArrowPrefab;
-    public int maxShots;
+    public int maxShots = 1;
+    public UnityEvent onShot;
+    public UnityEvent onRetrieve;
 
     new Rigidbody rigidbody;
     Controls controls;
@@ -37,16 +40,22 @@ public class PlayerScript : MonoBehaviour
     bool goingUp;
     float jumpingThreshold;
     float jumpFrame;
+    int availableArrows;
+
+    List<GameObject> ShotArrows;
 
     void Awake()
     {
         controls = new Controls();
         rigidbody = GetComponent<Rigidbody>();
-        
+
+
+        ShotArrows = new List<GameObject>();
         frameCount = slowdownFrames;
         move = Vector3.zero;
         airborne = false;
         jumpingThreshold = gravity * Time.fixedDeltaTime + 0.01f;
+        availableArrows = maxShots;
 
         controls.Player.Walk.started += ctx => Move(ctx.ReadValue<float>());
         controls.Player.Walk.canceled += ctx => Move(0);
@@ -140,10 +149,42 @@ public class PlayerScript : MonoBehaviour
 
     void Shoot()
     {
-        var arrow = Instantiate(
-            ArrowPrefab, 
-            transform.position, 
-            Quaternion.identity);
-        arrow.transform.LookAt(mousePosition);
+        if (availableArrows > 0)
+        {
+            var arrow = Instantiate(
+                ArrowPrefab, 
+                transform.position, 
+                Quaternion.identity);
+            arrow.transform.LookAt(mousePosition);
+            onShot?.Invoke();
+            availableArrows--;
+            ShotArrows.Add(arrow);
+        }
+        else
+        {
+            ShotArrows.ForEach(arrow =>
+                arrow.GetComponent<ArrowScript>().ReturnTo(this)
+            );
+        }
+    }
+
+    void Retrieve()
+    {
+        ShotArrows.Clear();
+        availableArrows = Mathf.Min(availableArrows + 1, maxShots);
+        onRetrieve?.Invoke();        
+    }
+
+    /// <summary>
+    /// OnTriggerEnter is called when the Collider other enters the trigger.
+    /// </summary>
+    /// <param name="other">The other Collider involved in this collision.</param>
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Retrievable"))
+        {
+            Retrieve();
+            Destroy(other.transform.parent.gameObject);
+        }
     }
 }

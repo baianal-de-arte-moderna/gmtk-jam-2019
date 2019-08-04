@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Arrow
   - Ground
+  - Retrievable
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - Player
   - EnemyHurtBox
   - EnemyRange
-  - 
+  - Retrievable
   - 
   - 
   - 
