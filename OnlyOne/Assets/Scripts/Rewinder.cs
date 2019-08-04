@@ -20,7 +20,7 @@ public class Rewinder : MonoBehaviour {
 
     private void Start() {
         checkpoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("Checkpoint"));
-        checkpoints.Sort((checkpoint1, checkpoint2) => Math.Sign(transform.position.x - checkpoint2.transform.position.x));
+        checkpoints.Sort((checkpoint1, checkpoint2) => Math.Sign(checkpoint1.transform.position.x - checkpoint2.transform.position.x));
     }
 
     void Update() {
