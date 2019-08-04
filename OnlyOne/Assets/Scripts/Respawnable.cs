@@ -2,10 +2,14 @@
 
 public class Respawnable : MonoBehaviour {
 
-    private Vector3 initialPosition;
+    protected Vector3 initialPosition;
 
     private void Start() {
         initialPosition = transform.position;
+    }
+
+    public void ClearCheckpoint(Checkpoint checkpoint) {
+        initialPosition = checkpoint.transform.position;
     }
 
     public void Despawn() {

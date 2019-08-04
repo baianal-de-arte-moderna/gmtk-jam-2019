@@ -11,7 +11,9 @@ public class Respawner : MonoBehaviour {
 
     public void Respawn() {
         foreach (Respawnable respawnable in respawnables) {
-            respawnable.Respawn();
+            if (respawnable.enabled) {
+                respawnable.Respawn();
+            }
         }
     }
 }
