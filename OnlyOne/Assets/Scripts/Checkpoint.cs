@@ -38,6 +38,10 @@ public class Checkpoint : MonoBehaviour {
         return aliveEnemySpawners.Count == 0;
     }
 
+    public List<EnemySpawner> GetEnemySpawners() {
+        return enemySpawners;
+    }
+
     private void OnDrawGizmos() {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, 0.5f);

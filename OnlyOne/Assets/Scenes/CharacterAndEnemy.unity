@@ -640,7 +640,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnCheckpointClearedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 604304591}
+        m_MethodName: UpdateEnemyCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: CheckpointClearedEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
 --- !u!212 &441695744
@@ -818,6 +829,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 14
   m_Mesh: {fileID: -718796339760109446, guid: a1c18902704c143729582bb8e8a8a74c, type: 3}
+--- !u!114 &604304591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 604304591, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
+    type: 3}
+  m_PrefabInstance: {fileID: 1585271982217356337}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b0100fd9e5a14211b07c760bca8795c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &641956442
 GameObject:
   m_ObjectHideFlags: 0
@@ -2742,123 +2765,6 @@ PrefabInstance:
       propertyPath: OnCheckpointClearedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 657577838}
-    - target: {fileID: 1585271982136392408, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271982136392408, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271982136392408, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271982136392408, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 129
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271982136392408, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 104
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271982136392408, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271982136392408, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271982136392408, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981972095697, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981972095697, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981972095697, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981972095697, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 129
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981972095697, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 104
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981972095697, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_Pivot.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981972095697, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981972095696, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: b4be62c7fcf5d4ba0839f0a234d96ae9,
-        type: 3}
-    - target: {fileID: 1585271982136392411, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 98d2d03ae5e774cf49f23715d1442ea2,
-        type: 3}
-    - target: {fileID: 1585271980814699410, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271980814699410, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271980516581869, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271980516581869, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981956507700, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1585271981956507700, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 20
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2763ee187991e4bc09bf2b1d0b4ce000, type: 3}
 --- !u!1001 &5688285880475372276
