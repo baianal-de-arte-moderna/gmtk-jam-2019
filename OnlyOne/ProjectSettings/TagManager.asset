@@ -19,8 +19,8 @@ TagManager:
   - Arrow
   - Ground
   - Player
-  - 
-  - 
+  - EnemyHurtBox
+  - EnemyRange
   - 
   - 
   - 
