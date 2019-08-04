@@ -313,10 +313,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arrow_Strick
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: d88f44a50e8df4fc191abbc7564d3b55,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d88f44a50e8df4fc191abbc7564d3b55,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d88f44a50e8df4fc191abbc7564d3b55,
         type: 3}
@@ -326,7 +331,7 @@ PrefabInstance:
     - target: {fileID: -4216859302048453862, guid: d88f44a50e8df4fc191abbc7564d3b55,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.89
+      value: -2.65
       objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: d88f44a50e8df4fc191abbc7564d3b55,
         type: 3}

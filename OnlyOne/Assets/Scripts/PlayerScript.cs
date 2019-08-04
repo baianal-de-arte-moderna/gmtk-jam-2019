@@ -26,6 +26,9 @@ public class PlayerScript : MonoBehaviour
     public Texture2D aimSprite;
     public GameObject ArrowPrefab;
     public int maxShots = 1;
+    public AudioSource AudioPlayer;
+    public AudioClip ShotFiredAudio;
+    public AudioClip ReloadingAudio;
     public UnityEvent onShot;
     public UnityEvent onRetrieve;
 
@@ -159,6 +162,7 @@ public class PlayerScript : MonoBehaviour
             onShot?.Invoke();
             availableArrows--;
             ShotArrows.Add(arrow);
+            AudioPlayer.PlayOneShot(ShotFiredAudio);
         }
         else
         {
@@ -172,7 +176,8 @@ public class PlayerScript : MonoBehaviour
     {
         ShotArrows.Clear();
         availableArrows = Mathf.Min(availableArrows + 1, maxShots);
-        onRetrieve?.Invoke();        
+        onRetrieve?.Invoke();   
+        AudioPlayer.PlayOneShot(ReloadingAudio);     
     }
 
     /// <summary>
@@ -183,8 +188,8 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.CompareTag("Retrievable"))
         {
-            Retrieve();
             Destroy(other.transform.parent.gameObject);
+            Retrieve();
         }
     }
 }
