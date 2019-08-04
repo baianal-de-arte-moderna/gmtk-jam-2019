@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8467095790126919046}
   - component: {fileID: 8467095790126919045}
   - component: {fileID: 8467095790126919047}
+  - component: {fileID: 6859942835490780629}
   m_Layer: 11
   m_Name: placeholder
   m_TagString: Player
@@ -206,3 +207,15 @@ MonoBehaviour:
   ArrowPrefab: {fileID: 8491706884431537028, guid: 09335722dca848546a2d567e0ef842c6,
     type: 3}
   maxShots: 0
+--- !u!114 &6859942835490780629
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8467095790126919050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358f83cc07ae94579bb2a4352fcfdec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
