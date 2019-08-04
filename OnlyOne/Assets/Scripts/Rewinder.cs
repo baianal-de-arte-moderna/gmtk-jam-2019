@@ -15,17 +15,17 @@ public class Rewinder : MonoBehaviour {
     [SerializeField]
     private CheckpointEvent OnCheckpointEvent;
 
-    private List<GameObject> checkpoints;
+    private List<Checkpoint> checkpoints;
     private int currentCheckpointInterval;
 
     private void Start() {
-        checkpoints = new List<GameObject>(GameObject.FindGameObjectsWithTag("Checkpoint"));
+        checkpoints = new List<Checkpoint>(FindObjectsOfType<Checkpoint>());
         checkpoints.Sort((checkpoint1, checkpoint2) => Math.Sign(checkpoint1.transform.position.x - checkpoint2.transform.position.x));
     }
 
     void Update() {
-        GameObject lastCheckpoint = checkpoints[currentCheckpointInterval];
-        GameObject nextCheckpoint = checkpoints[currentCheckpointInterval + 1];
+        Checkpoint lastCheckpoint = checkpoints[currentCheckpointInterval];
+        Checkpoint nextCheckpoint = checkpoints[currentCheckpointInterval + 1];
 
         if (reference.transform.position.x >= nextCheckpoint.transform.position.x) {
             OnCheckpointEvent?.Invoke(lastCheckpoint.transform.position);
