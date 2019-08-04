@@ -11,9 +11,9 @@ public class PlayerScript : MonoBehaviour
     [Header("Movement")]
     public float topSpeed;
     public float topJump;
-    public int tractionFrames;
+    public float tractionFrames;
     public AnimationCurve traction;
-    public int slowdownFrames;
+    public float slowdownFrames;
     public AnimationCurve slowdown;
 
     
@@ -21,12 +21,16 @@ public class PlayerScript : MonoBehaviour
     public float jumpForce;
     public AnimationCurve jumpCurve;
 
+    [Header("Shoot")]
+    public Texture2D aimSprite;
+    public GameObject ArrowPrefab;
+    public int maxShots;
 
     new Rigidbody rigidbody;
     Controls controls;
     Vector3 move;
     Vector3 nextVelocity;
-    int frameCount;
+    float frameCount;
     bool airborne;
     bool jumpCommand;
     bool goingUp;
@@ -38,6 +42,7 @@ public class PlayerScript : MonoBehaviour
         controls = new Controls();
         rigidbody = GetComponent<Rigidbody>();
         
+        frameCount = slowdownFrames;
         move = Vector3.zero;
         airborne = false;
         jumpingThreshold = gravity * Time.fixedDeltaTime + 0.01f;
@@ -47,6 +52,10 @@ public class PlayerScript : MonoBehaviour
 
         controls.Player.Jump.started += ctx => Jump(true);
         controls.Player.Jump.canceled += ctx => Jump(false);
+
+        controls.Player.Shoot.started += ctx => Shoot();
+
+        Cursor.SetCursor(aimSprite, Vector2.zero, CursorMode.Auto);
     }
 
     void OnEnable()
@@ -76,9 +85,10 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            rigidbody.velocity += Vector3.down * gravity * Time.deltaTime;
+            nextVelocity = rigidbody.velocity;
+            nextVelocity.y -= gravity * Time.deltaTime;
+            rigidbody.velocity = nextVelocity;
         }
-        Debug.Log(goingUp);
     }
 
     void FixedUpdate()
@@ -93,9 +103,9 @@ public class PlayerScript : MonoBehaviour
         }
         else if (rigidbody.velocity.x != 0f)
         {
-            frameCount = Mathf.Min(frameCount + 1, tractionFrames);
+            frameCount = Mathf.Min(frameCount + 1, slowdownFrames);
             nextVelocity = rigidbody.velocity;
-            nextVelocity.x = topSpeed * traction.Evaluate(frameCount / slowdownFrames);
+            nextVelocity.x = topSpeed * slowdown.Evaluate(frameCount / slowdownFrames) * Mathf.Sign(rigidbody.velocity.x);
             rigidbody.velocity = nextVelocity;
         }
     }
@@ -106,15 +116,26 @@ public class PlayerScript : MonoBehaviour
             (move.x != 0 && multiplier == 0))
         {
             // Moving State changed
-            frameCount = 0;
+            frameCount = 0f;
         }
         move.x = multiplier;
-    }    
+    }
 
     void Jump(bool status)
     {
         jumpCommand = status;
         goingUp = jumpCommand && !airborne;
         if (goingUp) jumpFrame = 0;
-    }  
+    }
+
+    void Shoot()
+    {
+        var arrow = Instantiate(
+            ArrowPrefab, 
+            transform.position, 
+            Quaternion.identity);
+        arrow.transform.LookAt(
+            Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, -Camera.main.transform.position.z))
+        );
+    }
 }

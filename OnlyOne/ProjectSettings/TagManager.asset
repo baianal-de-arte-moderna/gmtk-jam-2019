@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Arrow
+  - Ground
   - Checkpoint
   layers:
   - Default
@@ -15,9 +17,9 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
-  - 
+  - Arrow
+  - Ground
+  - Player
   - 
   - 
   - 
