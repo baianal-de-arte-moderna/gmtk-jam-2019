@@ -42,7 +42,11 @@ public class Rewinder : MonoBehaviour {
         Checkpoint nextCheckpoint = checkpoints[currentCheckpointInterval + 1];
 
         if (reference.transform.position.x >= nextCheckpoint.transform.position.x) {
-            OnCheckpointEvent?.Invoke(lastCheckpoint.transform.position);
+            if (nextCheckpoint.IsCleared()) {
+                ClearCurrentCheckpoint(nextCheckpoint);
+            } else {
+                OnCheckpointEvent?.Invoke(lastCheckpoint.transform.position);
+            }
         }
     }
 

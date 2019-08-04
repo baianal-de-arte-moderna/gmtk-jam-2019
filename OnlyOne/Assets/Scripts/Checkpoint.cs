@@ -28,9 +28,13 @@ public class Checkpoint : MonoBehaviour {
     private void OnEnemySpawnerHit(EnemySpawner enemySpawner) {
         enemySpawner.Despawn();
 
-        List<EnemySpawner> aliveEnemySpawners = enemySpawners.FindAll(EnemySpawner.IsSpawned);
-        if (aliveEnemySpawners.Count == 0) {
+        if (IsCleared()) {
             OnCheckpointClearedEvent?.Invoke(this);
         }
+    }
+
+    public bool IsCleared() {
+        List<EnemySpawner> aliveEnemySpawners = enemySpawners.FindAll(EnemySpawner.IsSpawned);
+        return aliveEnemySpawners.Count == 0;
     }
 }
