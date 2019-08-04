@@ -149,7 +149,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8034069424437335433}
+      - m_Target: {fileID: 0}
         m_MethodName: Despawn
         m_Mode: 1
         m_Arguments:
@@ -180,7 +180,6 @@ GameObject:
   - component: {fileID: 8034069424437335434}
   - component: {fileID: 8034069424437335435}
   - component: {fileID: 8034069424437335432}
-  - component: {fileID: 8034069424437335433}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -305,18 +304,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.98, y: 2.78, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8034069424437335433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8034069424437335439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 358f83cc07ae94579bb2a4352fcfdec7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8034069424508595352
 GameObject:
   m_ObjectHideFlags: 0

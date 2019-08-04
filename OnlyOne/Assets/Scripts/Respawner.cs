@@ -15,5 +15,10 @@ public class Respawner : MonoBehaviour {
                 respawnable.Respawn();
             }
         }
+
+        List<EnemySpawner> enemySpawners = new List<EnemySpawner>(FindObjectsOfType<EnemySpawner>());
+        foreach (EnemySpawner enemySpawner in enemySpawners) {
+            enemySpawner.Spawn();
+        }
     }
 }

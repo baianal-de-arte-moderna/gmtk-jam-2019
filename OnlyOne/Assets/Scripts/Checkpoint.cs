@@ -12,25 +12,24 @@ public class Checkpoint : MonoBehaviour {
     [SerializeField]
     public CheckpointClearedEvent OnCheckpointClearedEvent;
 
-    private List<EnemyScript> enemies;
+    private List<EnemySpawner> enemySpawners;
 
-    public void SetEnemies(List<EnemyScript> enemies) {
-        this.enemies = enemies;
+    public void SetEnemySpawners(List<EnemySpawner> enemySpawners) {
+        this.enemySpawners = enemySpawners;
 
-        foreach (EnemyScript enemy in enemies) {
-            enemy.OnEnemyHitEvent.AddListener(OnEnemyHit);
+        foreach (EnemySpawner enemySpawner in enemySpawners) {
+            enemySpawner.OnEnemySpawnerHitEvent.AddListener(OnEnemySpawnerHit);
             OnCheckpointClearedEvent.AddListener((Checkpoint checkpoint) => {
-                Respawnable respawnable = enemy.GetComponent<Respawnable>();
-                if (respawnable) {
-                    respawnable.enabled = false;
-                }
+                Destroy(enemySpawner);
             });
         }
     }
 
-    private void OnEnemyHit(EnemyScript enemy) {
-        enemies.Remove(enemy);
-        if (enemies.Count == 0) {
+    private void OnEnemySpawnerHit(EnemySpawner enemySpawner) {
+        enemySpawner.Despawn();
+
+        List<EnemySpawner> aliveEnemySpawners = enemySpawners.FindAll(EnemySpawner.IsSpawned);
+        if (aliveEnemySpawners.Count == 0) {
             OnCheckpointClearedEvent?.Invoke(this);
         }
     }
