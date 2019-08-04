@@ -18,6 +18,9 @@ public class Rewinder : MonoBehaviour {
     [SerializeField]
     private CheckpointClearedEvent OnCheckpointClearedEvent;
 
+    [SerializeField]
+    private EnemyCount enemyCount;
+
     private List<Checkpoint> checkpoints;
     private int currentCheckpointInterval;
 
@@ -39,6 +42,8 @@ public class Rewinder : MonoBehaviour {
 
             nextCheckpoint.OnCheckpointClearedEvent.AddListener(ClearCurrentCheckpoint);
         }
+
+        enemyCount.UpdateEnemyCount(checkpoints[1]);
     }
 
     void Update() {
@@ -57,10 +62,16 @@ public class Rewinder : MonoBehaviour {
     public void Rewind() {
         Checkpoint lastCheckpoint = checkpoints[currentCheckpointInterval];
         OnCheckpointEvent?.Invoke(lastCheckpoint.transform.position);
+
+        Checkpoint nextCheckpoint = checkpoints[currentCheckpointInterval + 1];
+        enemyCount.UpdateEnemyCount(nextCheckpoint);
     }
 
     public void ClearCurrentCheckpoint(Checkpoint checkpoint) {
         currentCheckpointInterval++;
         OnCheckpointClearedEvent?.Invoke(checkpoint);
+
+        Checkpoint nextCheckpoint = checkpoints[currentCheckpointInterval];
+        enemyCount.UpdateEnemyCount(nextCheckpoint);
     }
 }

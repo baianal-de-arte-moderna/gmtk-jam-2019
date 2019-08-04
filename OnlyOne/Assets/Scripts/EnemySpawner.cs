@@ -16,7 +16,7 @@ public class EnemySpawner : MonoBehaviour {
 
     private GameObject enemyInstance;
 
-    private void Start() {
+    private void Awake() {
         Spawn();
     }
 

@@ -12,6 +12,9 @@ public class Checkpoint : MonoBehaviour {
     [SerializeField]
     public CheckpointClearedEvent OnCheckpointClearedEvent;
 
+    [SerializeField]
+    private EnemyCount enemyCount;
+
     private List<EnemySpawner> enemySpawners;
 
     public void SetEnemySpawners(List<EnemySpawner> enemySpawners) {
@@ -31,6 +34,8 @@ public class Checkpoint : MonoBehaviour {
         if (IsCleared()) {
             OnCheckpointClearedEvent?.Invoke(this);
         }
+
+        enemyCount.UpdateEnemyCount(this);
     }
 
     public bool IsCleared() {
