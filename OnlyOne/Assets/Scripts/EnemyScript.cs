@@ -7,7 +7,7 @@ public class PlayerHitEvent : UnityEvent {
 }
 
 [Serializable]
-public class EnemyHitEvent : UnityEvent<GameObject> {
+public class EnemyHitEvent : UnityEvent<EnemyScript> {
 }
 
 public class EnemyScript : MonoBehaviour {
@@ -22,10 +22,16 @@ public class EnemyScript : MonoBehaviour {
     private Collider hurtboxCollider;
 
     [SerializeField]
-    private PlayerHitEvent OnPlayerHitEvent;
+    public PlayerHitEvent OnPlayerHitEvent;
 
     [SerializeField]
-    private EnemyHitEvent OnEnemyHitEvent;
+    public EnemyHitEvent OnEnemyHitEvent;
+
+    private void OnCollisionEnter(Collision collision) {
+        if (collision.collider == hurtboxCollider) {
+            OnEnemyHitEvent?.Invoke(this);
+        }
+    }
 
     private void OnTriggerEnter(Collider other) {
         if (other == drawingInstanceCollider) {
@@ -34,10 +40,6 @@ public class EnemyScript : MonoBehaviour {
 
         if (other == attackingCollider) {
             OnPlayerHitEvent?.Invoke();
-        }
-
-        if (other == hurtboxCollider) {
-            OnEnemyHitEvent?.Invoke(gameObject);
         }
     }
 
