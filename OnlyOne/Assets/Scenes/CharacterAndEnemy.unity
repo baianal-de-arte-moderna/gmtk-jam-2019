@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -427,6 +427,18 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: EnemySpawnerHitEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &300066576 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1622308705, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
+    type: 3}
+  m_PrefabInstance: {fileID: 1585271982217356337}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de8dbd1db781cfc49bb1c525dca521bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &304004693
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1663,6 +1675,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 76c86226946276b48a4e6b65baeabd37, type: 2}
+    - target: {fileID: -6993117609283682800, guid: a1c18902704c143729582bb8e8a8a74c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -6137840562424105092, guid: a1c18902704c143729582bb8e8a8a74c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -2595,7 +2612,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9d9fdc65a3877714cb0696b7e5ade236, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.391
+  m_Volume: 0.504
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2765,6 +2782,31 @@ PrefabInstance:
       propertyPath: OnCheckpointClearedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 657577838}
+    - target: {fileID: 1585271980546875882, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
+        type: 3}
+      propertyPath: speed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585271981119860512, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585271981119860512, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
+        type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585271981119860512, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
+        type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
+    - target: {fileID: 1585271981119860512, guid: 2763ee187991e4bc09bf2b1d0b4ce000,
+        type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2763ee187991e4bc09bf2b1d0b4ce000, type: 3}
 --- !u!1001 &5688285880475372276
@@ -2851,7 +2893,7 @@ PrefabInstance:
     - target: {fileID: 8467095790126919044, guid: b65d163814fb42044979c4bb8abf65d0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 3.7
       objectReference: {fileID: 0}
     - target: {fileID: 8467095790126919044, guid: b65d163814fb42044979c4bb8abf65d0,
         type: 3}
@@ -2917,6 +2959,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.3934208
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467095790126919047, guid: b65d163814fb42044979c4bb8abf65d0,
+        type: 3}
+      propertyPath: onShot.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 300066576}
+    - target: {fileID: 8467095790126919047, guid: b65d163814fb42044979c4bb8abf65d0,
+        type: 3}
+      propertyPath: onShot.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Shot
+      objectReference: {fileID: 0}
+    - target: {fileID: 8467095790126919047, guid: b65d163814fb42044979c4bb8abf65d0,
+        type: 3}
+      propertyPath: onRetrieve.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 300066576}
+    - target: {fileID: 8467095790126919047, guid: b65d163814fb42044979c4bb8abf65d0,
+        type: 3}
+      propertyPath: onRetrieve.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Retrieve
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b65d163814fb42044979c4bb8abf65d0, type: 3}

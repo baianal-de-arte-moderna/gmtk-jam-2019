@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -73,6 +74,8 @@ public class PlayerScript : MonoBehaviour
         controls.Player.Aim.performed += ctx => SetMousePosition(ctx.ReadValue<Vector2>());
 
         Cursor.SetCursor(aimSprite, Vector2.zero, CursorMode.Auto);
+
+        SceneManager.LoadScene(3, LoadSceneMode.Additive);
     }
 
     void OnEnable()
