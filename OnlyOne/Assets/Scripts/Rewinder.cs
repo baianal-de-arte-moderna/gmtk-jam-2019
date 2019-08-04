@@ -50,6 +50,11 @@ public class Rewinder : MonoBehaviour {
         }
     }
 
+    public void Rewind() {
+        Checkpoint lastCheckpoint = checkpoints[currentCheckpointInterval];
+        OnCheckpointEvent?.Invoke(lastCheckpoint.transform.position);
+    }
+
     public void ClearCurrentCheckpoint(Checkpoint checkpoint) {
         currentCheckpointInterval++;
         OnCheckpointClearedEvent?.Invoke(checkpoint);

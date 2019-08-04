@@ -23,8 +23,8 @@ TagManager:
   - EnemyHurtBox
   - EnemyRange
   - Retrievable
-  - 
-  - 
+  - Boundary
+  - Enemy
   - 
   - 
   - 
