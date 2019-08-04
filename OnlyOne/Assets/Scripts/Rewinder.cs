@@ -26,6 +26,10 @@ public class Rewinder : MonoBehaviour {
         checkpoints.Sort((checkpoint1, checkpoint2) => Math.Sign(checkpoint1.transform.position.x - checkpoint2.transform.position.x));
 
         List<EnemySpawner> enemySpawners = new List<EnemySpawner>(FindObjectsOfType<EnemySpawner>());
+        foreach (EnemySpawner enemySpawner in enemySpawners) {
+            enemySpawner.OnPlayerHitEvent.AddListener(Rewind);
+        }
+
         for (int i = 0; i < checkpoints.Count - 1; ++i) {
             Checkpoint lastCheckpoint = checkpoints[i];
             Checkpoint nextCheckpoint = checkpoints[i + 1];
