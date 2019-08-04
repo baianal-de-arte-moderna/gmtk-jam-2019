@@ -14,6 +14,12 @@ public class RollingFilmStrip : MonoBehaviour {
     private List<Image> filmFrames;
 
     [SerializeField]
+    private Image transitionOverlay;
+
+    [SerializeField]
+    private Image rewindOverlay;
+
+    [SerializeField]
     private float transitionSpeed;
 
     [SerializeField]
@@ -25,7 +31,7 @@ public class RollingFilmStrip : MonoBehaviour {
     [SerializeField]
     private FilmStripEvent OnExitFilmStripEvent;
 
-    private const float inScale = 2;
+    private const float inScale = 1;
     private const float outScale = 2;
 
     private bool isEntering;
@@ -33,10 +39,26 @@ public class RollingFilmStrip : MonoBehaviour {
     private bool shouldExit;
     private bool isExiting;
 
+    private void Start() {
+        foreach (Image filmFrame in filmFrames) {
+            filmFrame.gameObject.SetActive(false);
+        }
+
+        rewindOverlay.gameObject.SetActive(false);
+        transitionOverlay.gameObject.SetActive(false);
+    }
+
     private void Update() {
         if (isEntering && transform.localScale.x >= inScale) {
+            rewindOverlay.gameObject.SetActive(false);
+            transitionOverlay.gameObject.SetActive(true);
+
             transform.localScale -= new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
             if (transform.localScale.x < inScale) {
+                foreach (Image filmFrame in filmFrames) {
+                    filmFrame.gameObject.SetActive(true);
+                }
+
                 isEntering = false;
                 isRewinding = true;
                 transform.localScale = inScale * Vector3.one;
@@ -45,8 +67,18 @@ public class RollingFilmStrip : MonoBehaviour {
         }
 
         if (isExiting && transform.localScale.x <= outScale) {
+            foreach (Image filmFrame in filmFrames) {
+                filmFrame.gameObject.SetActive(false);
+            }
+
+            rewindOverlay.gameObject.SetActive(false);
+            transitionOverlay.gameObject.SetActive(true);
+
             transform.localScale += new Vector3(Time.deltaTime, Time.deltaTime, Time.deltaTime);
             if (transform.localScale.x > outScale) {
+                rewindOverlay.gameObject.SetActive(false);
+                transitionOverlay.gameObject.SetActive(false);
+
                 isExiting = false;
                 transform.localScale = outScale * Vector3.one;
                 OnExitFilmStripEvent?.Invoke();
@@ -54,6 +86,9 @@ public class RollingFilmStrip : MonoBehaviour {
         }
 
         if (isRewinding || shouldExit) {
+            rewindOverlay.gameObject.SetActive(true);
+            transitionOverlay.gameObject.SetActive(false);
+
             for (int i = 0; i < filmFrames.Count; ++i) {
                 Image filmFrame = filmFrames[i];
                 float y = filmFrame.rectTransform.anchoredPosition.y;
